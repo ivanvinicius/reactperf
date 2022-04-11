@@ -1,0 +1,16 @@
+.listItem {
+  padding: 12px 0;
+
+  font-size: 16px;  
+  color: var(--text);
+
+  transition: filter 0.2s;
+
+  & + li {
+    border-top: 1px solid var(--divider);
+  }
+
+  &:hover {
+    filter:brightness(0.8)
+  }
+}

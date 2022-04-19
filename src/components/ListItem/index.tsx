@@ -1,6 +1,18 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
+import dynamic from 'next/dynamic'
+
+import { AddToWishListProps } from '../AddToWishList'
 
 import styles from './listitem.module.scss'
+
+const AddToWishList = dynamic<AddToWishListProps>(
+  () => {
+    return import('../AddToWishList').then(mod => mod.AddToWishList)
+  },
+  {
+    loading: () => <span>carregando...</span>
+  }
+)
 
 interface Product {
   id: number
@@ -15,15 +27,27 @@ interface ListItemProps {
 }
 
 function ListItemComponent({ item, onAddToWishList }: ListItemProps) {
+  const [isAddingToWishList, setIsAddingToWishList] = useState(false)
+
+  // async function showFormattedDate() {
+  //  const datefns = await import('date-fns')
+  // }
+
   return (
     <li className={styles.listItem}>
       {item.title} - <strong>R$ {item.formattedPrice}</strong>
       <button
+        onClick={() => setIsAddingToWishList(true)}
         className={styles.listItemButton}
-        onClick={() => onAddToWishList(item.id)}
       >
-        Add to wish list
+        Adicionar aos favoritos
       </button>
+      {isAddingToWishList && (
+        <AddToWishList
+          onAddToWishList={() => onAddToWishList(item.id)}
+          onRequestClose={() => setIsAddingToWishList(false)}
+        />
+      )}
     </li>
   )
 }

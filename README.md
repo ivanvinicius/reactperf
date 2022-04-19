@@ -29,9 +29,33 @@ mudança nas propriedades do componente.
 3. O segundo parâmentro do memo é utilizado quando as propriedades do componente não são do tipo 
 primitivo, ou seja, no caso de arrays e objetos a comparação não funciona da forma correta.
 4. Em quais momentos utilizar?
-  4.1. Quando temos um Pure Functional Component. São componentes que não envolvem nenhuma lógica,
+  * Quando temos um Pure Functional Component. São componentes que não envolvem nenhuma lógica,
   apenas recebem (ou não) propriedades e retornam as mesmas, sem nenhuma alteração.
-  4.2. Componentes que renderizam demais (Renders too often).
-  4.3. Renderizações com as mesmas propriedades.
-  4.4. Componentes que tem um tamanho grande ou médio, componentes pequenos não necessitam da 
+  * Componentes que renderizam demais (Renders too often).
+  * Renderizações com as mesmas propriedades.
+  * Componentes que tem um tamanho grande ou médio, componentes pequenos não necessitam da 
   utilização do memo.
+
+## useMemo
+
+1. Utilizado para memorizar funções que tenham cálculos muito complexos, e que consumam muito 
+processamento da máquina.
+2. Também é utilizado para evitar que funções ocupem novos espaços na memória, exemplo a seguir:
+```js
+  const totalPrice = useMemo(() => {
+    return results.reduce((acc, currentItem) => {
+      return acc + currentItem.price
+    }, 0)
+  }, [results])
+
+  return (
+    <>
+      /* Sem o useMemo, a vez que o NewComponent é criado, o totalPrice ocupa um novo espaço na memória. */
+      /* Com o useMemo, a igualdade referêncial é criada. */
+      <NewComponent totalPrice={totalPrice}/>
+      <NewComponent totalPrice={totalPrice}/>
+      <NewComponent totalPrice={totalPrice}/>
+    </>
+  )
+
+```

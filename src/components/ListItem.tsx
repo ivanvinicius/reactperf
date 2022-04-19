@@ -1,5 +1,6 @@
 import { memo, useState } from 'react'
 import dynamic from 'next/dynamic'
+import loadsh from 'lodash'
 
 import { AddToWishListProps } from './AddToWishList'
 import { IProductData } from '../@types/IProductData'
@@ -22,21 +23,23 @@ function ListItemComponent({ item, onAddToWishList }: ListItemProps) {
   const [isAddingToWishList, setIsAddingToWishList] = useState(false)
 
   return (
-    <li>
-      {item.title} - <strong>R$ {item.formattedPrice}</strong>
-      <button onClick={() => setIsAddingToWishList(true)}>
-        Adicionar aos favoritos
-      </button>
+    <div className="list">
+      <div className="listInfo">
+        {item.title} - <strong>R$ {item.formattedPrice}</strong>
+        <button onClick={() => setIsAddingToWishList(true)}>
+          Adicionar aos favoritos
+        </button>
+      </div>
       {isAddingToWishList && (
         <AddToWishList
           onAddToWishList={() => onAddToWishList(item.id)}
           onRequestClose={() => setIsAddingToWishList(false)}
         />
       )}
-    </li>
+    </div>
   )
 }
 
 export const ListItem = memo(ListItemComponent, (prevProps, nextProps) => {
-  return Object.is(prevProps.item, nextProps.item)
+  return loadsh.isEqual(prevProps.item, nextProps.item)
 })

@@ -32,6 +32,8 @@
 * [Next.JS](https://nextjs.org/)
 * [React Virtualized](https://github.com/bvaughn/react-virtualized)
 * [Sass CSS](https://sass-lang.com/)
+* [Next.JS Bundle Analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
+* [Lodash](https://lodash.com/)
 
 ## Instalação e utilização
 
@@ -143,6 +145,15 @@ const AddToWishList = dynamic<AddToWishListProps>(
     const datefns = await import('date-fns')
   }
  ```
+
+## Bundle analyzer
+
+1. Utilizado para visualizar o tamanho dos pacotes da aplicação antes do deploy da mesma. Para isso,
+basta rodar o comando abaixo no terminal.
+
+```bash
+ANALYZE=true yarn build
+```
 
 <br />
 

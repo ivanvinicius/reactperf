@@ -24,9 +24,10 @@ export function List({ data, totalPrice, onAddToWishList }: ListProps) {
       <strong>Soma total dos itens: {formatCurrency.format(totalPrice)}</strong>
 
       <VirtualList
-        height={500}
+        className="virtualList"
+        height={620}
         rowHeight={50}
-        width={900}
+        width={1240}
         overscanRowCount={5} // items pré-carregados
         rowCount={data.length}
         rowRenderer={rowRender}

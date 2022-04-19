@@ -31,20 +31,23 @@ button {
 }
 
 input {
-  padding: 10px;
-  font-size: 16px;
   margin-bottom: 20px;
   margin-right: 20px;
-}
-
-ul {
-  list-style: none;
-  margin-top: 20px;
-}
-
-li {
+  padding: 10px;
   
-  button {
-    margin-left: 20px;
-  }
+  font-size: 16px;
+}
+
+.virtualList {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+}
+
+.listInfo {
+  margin-right: 20px;
 }

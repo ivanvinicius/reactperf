@@ -1,45 +1,30 @@
 import { memo, useState } from 'react'
 import dynamic from 'next/dynamic'
 
-import { AddToWishListProps } from '../AddToWishList'
-
-import styles from './listitem.module.scss'
+import { AddToWishListProps } from './AddToWishList'
+import { IProductData } from '../@types/IProductData'
 
 const AddToWishList = dynamic<AddToWishListProps>(
   () => {
-    return import('../AddToWishList').then(mod => mod.AddToWishList)
+    return import('./AddToWishList').then(mod => mod.AddToWishList)
   },
   {
     loading: () => <span>carregando...</span>
   }
 )
 
-interface Product {
-  id: number
-  price: number
-  title: string
-  formattedPrice: string
-}
-
 interface ListItemProps {
-  item: Product
+  item: IProductData
   onAddToWishList: (id: number) => void
 }
 
 function ListItemComponent({ item, onAddToWishList }: ListItemProps) {
   const [isAddingToWishList, setIsAddingToWishList] = useState(false)
 
-  // async function showFormattedDate() {
-  //  const datefns = await import('date-fns')
-  // }
-
   return (
-    <li className={styles.listItem}>
+    <li>
       {item.title} - <strong>R$ {item.formattedPrice}</strong>
-      <button
-        onClick={() => setIsAddingToWishList(true)}
-        className={styles.listItemButton}
-      >
+      <button onClick={() => setIsAddingToWishList(true)}>
         Adicionar aos favoritos
       </button>
       {isAddingToWishList && (

@@ -1,6 +1,54 @@
-# reactperf
+<div id="top" align="center">
+  <div>
+    <img src="github/images/reactperf-logo.png" alt="Logo" width="130px" height="130px">
+  </div>
+  <h4 align="center">React hooks para melhoria de perfomance na aplicação.</h4>
+</div>
 
-Entendo mais sobre os hooks do React pare ter uma melhor performance no app.
+
+## Resumo
+
+<ol>
+  <li><a href="#visão-geral-do-projeto">Visão geral do projeto</a></li>
+  <li><a href="#tecnologias-utilizadas">Tecnologias utilizadas</a></li>
+  <li><a href="#instalação-e-utilização">Instalação e utilização</a></li>
+  <li><a href="#renderização-no-react">Renderização no React</a></li>
+  <li><a href="#memo">memo</a></li>
+  <li><a href="#usememo">useMemo</a></li>
+  <li><a href="#usecallback">useCallback</a></li>
+  <li><a href="#code-splitting-ou-dynamic-import">Code Splitting ou Dynamic Import</a></li>
+  <li><a href="#virtualização">Virtualização</a></li>
+  <li><a href="#bundle-analyzer">Bundle analyzer</a></li>
+</ol>
+
+## Visão geral do projeto
+
+<div align="center">
+  <img src="github/images/reactperf-home.png" alt="project mock up">  
+</div>
+
+
+## Tecnologias utilizadas
+
+* [Next.JS](https://nextjs.org/)
+* [React Virtualized](https://github.com/bvaughn/react-virtualized)
+* [Sass CSS](https://sass-lang.com/)
+
+## Instalação e utilização
+
+### Pré-requisitos
+
+Instalações necessárias
+
+1. NodeJS
+2. Yarn
+3. Json Server
+
+### Instalação
+
+1. Baixe as depedências do projeto com o comando `$ yarn`.
+2. Rode a Api fake com o comando `$ yarn server`. -> localhost:3333
+2. Rode o projeto com o comando `$ yarn dev`. -> localhost:3000
 
 ## Renderização no React
 
@@ -67,3 +115,36 @@ processamento da máquina.
 * No presente caso, cada vez que o componente **Home** é renderizado, uma nova versão da função **addToWishList**
 é criada na memória. Quando o React for comparar a função dos componentes filhos com a função do componente
 **Home**, não haverá igualdade referêcial, sendo assim, a função será recriada nos componentes filhos novamente.
+
+## Code Splitting ou Dynamic Import
+
+1. **Code Splitting** ou **Dynamic Import**, é utilizado para fazer o carregamento preguiçoso de componentes
+ou funções que são provindas de importações. Essa prática é muito utilizada quando funcionalidades não
+precisam ser carregas na primeira chamada da aplicação, e sim somente quando o usuário fazer uso da mesma.
+
+* Dynamic import de Componente
+
+```js
+import { AddToWishListProps } from './AddToWishList' /* interface */
+
+const AddToWishList = dynamic<AddToWishListProps>(
+  () => {
+    return import('./AddToWishList').then(mod => mod.AddToWishList)
+  },
+  {
+    loading: () => <span>carregando...</span>
+  }
+)
+ ```
+
+ * Dynamic import de Função
+
+```js
+  async function showFormattedDate() {
+    const datefns = await import('date-fns')
+  }
+ ```
+
+<br />
+
+<h4 align="center"><a href="#top">Voltar ao Início</a></h4>

@@ -1,31 +1,20 @@
 import { FormEvent, useRef, useState, useCallback } from 'react'
+
 import { List } from '../components/List'
+import { formatCurrency } from '../utils/formatCurrency'
+import { IProductData } from '../@types/IProductData'
 
-import styles from './home.module.scss'
-
-interface Product {
-  id: number
-  price: number
-  title: string
-  formattedPrice: string
-}
-
-interface Results {
+interface IResultData {
+  data: IProductData[]
   totalPrice: number
-  data: Product[]
 }
-
-const formatCurrency = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL'
-})
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
-  const [results, setResults] = useState<Results>({
-    totalPrice: 0,
-    data: []
+  const [result, setResult] = useState<IResultData>({
+    data: [],
+    totalPrice: 0
   })
 
   const addToWishList = useCallback(async (id: number) => {
@@ -42,43 +31,39 @@ export default function Home() {
     const response = await fetch(`http://localhost:3333/products?q=${search}`)
     const data = await response.json()
 
-    const dataFormatted = data.map(item => ({
+    const formattedData = data.map((item: IProductData) => ({
       ...item,
       formattedPrice: formatCurrency.format(item.price)
     }))
 
-    console.log(dataFormatted[0].formattedPrice)
-
-    const totalPrice = data.reduce((acc, currentItem) => {
+    const totalPrice = data.reduce((acc: number, currentItem: IProductData) => {
       return acc + currentItem.price
     }, 0)
 
-    setResults({ totalPrice, data: dataFormatted })
+    setResult({ data: formattedData, totalPrice })
   }
 
   return (
-    <main className={styles.container}>
-      <div className={styles.content}>
-        <form onSubmit={handleSearch} className={styles.form}>
-          <h1>Search</h1>
-
+    <main>
+      <div>
+        <form onSubmit={handleSearch}>
           <input
             id="search"
             name="search"
             ref={inputRef}
             type="text"
-            placeholder="Type something"
+            placeholder="Digite sua busca"
             value={search}
             onChange={event => setSearch(event.target.value)}
           />
 
-          <button type="submit">Search</button>
+          <button type="submit">Buscar</button>
         </form>
 
-        <div className={styles.listContainer}>
+        <div>
           <List
-            results={results.data}
-            totalPrice={results.totalPrice}
+            data={result.data}
+            totalPrice={result.totalPrice}
             onAddToWishList={addToWishList}
           />
         </div>

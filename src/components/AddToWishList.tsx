@@ -10,18 +10,8 @@ export function AddToWishList({
   return (
     <div>
       <span>Tem certeza que deseja adicionar aos favoritos?</span>
-      <button
-        style={{ padding: '10px', margin: '10px' }}
-        onClick={onAddToWishList}
-      >
-        Sim
-      </button>
-      <button
-        style={{ padding: '10px', margin: '10px' }}
-        onClick={onRequestClose}
-      >
-        Não
-      </button>
+      <button onClick={onAddToWishList}>Sim</button>
+      <button onClick={onRequestClose}>Não</button>
     </div>
   )
 }

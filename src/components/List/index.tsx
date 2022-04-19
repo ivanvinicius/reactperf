@@ -12,9 +12,10 @@ interface Product {
 
 interface ListProps {
   results: Product[]
+  onAddToWishList: (id: number) => void
 }
 
-export function List({ results }: ListProps) {
+export function List({ results, onAddToWishList }: ListProps) {
   const totalPrice = useMemo(() => {
     return results.reduce((acc, currentItem) => {
       return acc + currentItem.price
@@ -26,7 +27,11 @@ export function List({ results }: ListProps) {
       <span>{totalPrice}</span>
       <ul className={styles.list}>
         {results.map(result => (
-          <ListItem key={result.id} item={result} />
+          <ListItem
+            key={result.id}
+            item={result}
+            onAddToWishList={onAddToWishList}
+          />
         ))}
       </ul>
     </>

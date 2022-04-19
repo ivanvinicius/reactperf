@@ -24,7 +24,7 @@ e recria todas as informações, apenas altera.
 
 1. Muito utilizado quando o conteúdo do componente pai muda, mas o do filho permanece o mesmo.
 2. Evita que uma nova versão (virtual DOM) do componente seja criada de forma desnecessária, isso acontece
-graças ao algoritmo de `shallow compare`, que compara tipos primitivos para ver se houve uma
+graças ao algoritmo de **Shallow Compare**, que compara tipos primitivos para ver se houve uma
 mudança nas propriedades do componente.
 3. O segundo parâmentro do memo é utilizado quando as propriedades do componente não são do tipo 
 primitivo, ou seja, no caso de arrays e objetos a comparação não funciona da forma correta.
@@ -38,9 +38,10 @@ primitivo, ou seja, no caso de arrays e objetos a comparação não funciona da 
 
 ## useMemo
 
-1. Utilizado para memorizar funções que tenham cálculos muito complexos, e que consumam muito 
+1. Utilizado para memorizar valores de cálculos muito complexos, e que consumam muito 
 processamento da máquina.
-2. Também é utilizado para evitar que funções ocupem novos espaços na memória, exemplo a seguir:
+2. Também é utilizado para evitar que os valores ocupem novos espaços na memória, exemplo a seguir:
+
 ```js
   const totalPrice = useMemo(() => {
     return results.reduce((acc, currentItem) => {
@@ -50,12 +51,19 @@ processamento da máquina.
 
   return (
     <>
-      /* Sem o useMemo, a vez que o NewComponent é criado, o totalPrice ocupa um novo espaço na memória. */
+      /* Sem o useMemo, a cada vez que o NewComponent é criado, o totalPrice ocupa um novo espaço na memória. */
       /* Com o useMemo, a igualdade referêncial é criada. */
       <NewComponent totalPrice={totalPrice}/>
       <NewComponent totalPrice={totalPrice}/>
       <NewComponent totalPrice={totalPrice}/>
     </>
   )
-
 ```
+
+## useCallback
+
+1. Utilizado para memorizar funções, que são repassadas como propriedades para outros componentes.
+
+* No presente caso, cada vez que o componente **Home** é renderizado, uma nova versão da função **addToWishList**
+é criada na memória. Quando o React for comparar a função dos componentes filhos com a função do componente
+**Home**, não haverá igualdade referêcial, sendo assim, a função será recriada nos componentes filhos novamente.

@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useRef, useState, useCallback } from 'react'
 import { List } from '../components/List'
 
 import styles from './home.module.scss'
@@ -13,6 +13,11 @@ export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
   const [results, setResults] = useState<Product[]>([])
+
+  const addToWishList = useCallback(async (id: number) => {
+    // just an example
+    console.log(id)
+  }, [])
 
   async function handleSearch(event: FormEvent) {
     event.preventDefault()
@@ -47,7 +52,7 @@ export default function Home() {
         </form>
 
         <div className={styles.listContainer}>
-          <List results={results} />
+          <List results={results} onAddToWishList={addToWishList} />
         </div>
       </div>
     </main>

@@ -10,12 +10,19 @@ interface Product {
 
 interface ListItemProps {
   item: Product
+  onAddToWishList: (id: number) => void
 }
 
-function ListItemComponent({ item }: ListItemProps) {
+function ListItemComponent({ item, onAddToWishList }: ListItemProps) {
   return (
     <li className={styles.listItem}>
       {item.title} - <strong>R$ {item.price}</strong>
+      <button
+        style={{ padding: '10px', marginLeft: '20px' }}
+        onClick={() => onAddToWishList(item.id)}
+      >
+        Add to wish list
+      </button>
     </li>
   )
 }

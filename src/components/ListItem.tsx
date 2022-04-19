@@ -1,9 +1,10 @@
 import { memo, useState } from 'react'
-import dynamic from 'next/dynamic'
 import loadsh from 'lodash'
+import dynamic from 'next/dynamic'
+
+import { IProductData } from '../@types/IProductData'
 
 import { AddToWishListProps } from './AddToWishList'
-import { IProductData } from '../@types/IProductData'
 
 const AddToWishList = dynamic<AddToWishListProps>(
   () => {

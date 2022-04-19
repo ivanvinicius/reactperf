@@ -1,8 +1,9 @@
 import { List as VirtualList, ListRowRenderer } from 'react-virtualized'
 
-import { ListItem } from './ListItem'
-import { formatCurrency } from '../utils/formatCurrency'
 import { IProductData } from '../@types/IProductData'
+import { formatCurrency } from '../utils/formatCurrency'
+
+import { ListItem } from './ListItem'
 
 interface ListProps {
   data: IProductData[]

@@ -1,45 +1,55 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true,
-		"node": true,
-		"jest": true
-	},
-	"extends": [
-		"plugin:react/recommended",
-		"standard",
-		"plugin:@typescript-eslint/recommended"
-	],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"ecmaFeatures": {
-			"jsx": true
-		},
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"plugins": [
-		"react",
-		"@typescript-eslint",
-		"react-hooks",
-		"prettier"
-	],
-	"rules": {
-		"react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
-		
-		"prettier/prettier": "error",
-		"space-before-function-paren":"off",
-		"react/prop-types": "off",
-		"react/react-in-jsx-scope": "off",
-		"react/jsx-key": "off",
-		"camelcase": "off",
-		"no-case-declarations": "off",
-		"@typescript-eslint/no-explicit-any": "off",
-		
-		"react/self-closing-comp": ["error", {
-			"component": true,
-			"html": true
-		}]
-	}
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "standard",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "prettier",
+    "eslint-plugin-import-helpers"
+  ],
+  "rules": {
+    "camelcase": "off",
+    "react/jsx-key": "error",
+    "react/prop-types": "off",
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
+    "space-before-function-paren":"off",
+    "react-hooks/rules-of-hooks": "error", 
+    "react-hooks/exhaustive-deps": "warn", 
+    
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+      }],
+      
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          ["/^react/", "/^next/", "module"],
+          "parent",
+          ["sibling", "index"]
+        ]
+      }
+    ] 
+  }
 }

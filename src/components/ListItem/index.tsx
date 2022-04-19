@@ -6,6 +6,7 @@ interface Product {
   id: number
   price: number
   title: string
+  formattedPrice: string
 }
 
 interface ListItemProps {
@@ -16,9 +17,9 @@ interface ListItemProps {
 function ListItemComponent({ item, onAddToWishList }: ListItemProps) {
   return (
     <li className={styles.listItem}>
-      {item.title} - <strong>R$ {item.price}</strong>
+      {item.title} - <strong>R$ {item.formattedPrice}</strong>
       <button
-        style={{ padding: '10px', marginLeft: '20px' }}
+        className={styles.listItemButton}
         onClick={() => onAddToWishList(item.id)}
       >
         Add to wish list

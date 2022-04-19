@@ -7,15 +7,28 @@ interface Product {
   id: number
   price: number
   title: string
+  formattedPrice: string
 }
+
+interface Results {
+  totalPrice: number
+  data: Product[]
+}
+
+const formatCurrency = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL'
+})
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
-  const [results, setResults] = useState<Product[]>([])
+  const [results, setResults] = useState<Results>({
+    totalPrice: 0,
+    data: []
+  })
 
   const addToWishList = useCallback(async (id: number) => {
-    // just an example
     console.log(id)
   }, [])
 
@@ -29,7 +42,18 @@ export default function Home() {
     const response = await fetch(`http://localhost:3333/products?q=${search}`)
     const data = await response.json()
 
-    setResults(data)
+    const dataFormatted = data.map(item => ({
+      ...item,
+      formattedPrice: formatCurrency.format(item.price)
+    }))
+
+    console.log(dataFormatted[0].formattedPrice)
+
+    const totalPrice = data.reduce((acc, currentItem) => {
+      return acc + currentItem.price
+    }, 0)
+
+    setResults({ totalPrice, data: dataFormatted })
   }
 
   return (
@@ -52,7 +76,11 @@ export default function Home() {
         </form>
 
         <div className={styles.listContainer}>
-          <List results={results} onAddToWishList={addToWishList} />
+          <List
+            results={results.data}
+            totalPrice={results.totalPrice}
+            onAddToWishList={addToWishList}
+          />
         </div>
       </div>
     </main>

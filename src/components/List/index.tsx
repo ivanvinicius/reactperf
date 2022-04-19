@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { ListItem } from '../ListItem'
 
 import styles from './list.module.scss'
@@ -8,23 +6,26 @@ interface Product {
   id: number
   price: number
   title: string
+  formattedPrice: string
 }
 
 interface ListProps {
   results: Product[]
+  totalPrice: number
   onAddToWishList: (id: number) => void
 }
 
-export function List({ results, onAddToWishList }: ListProps) {
-  const totalPrice = useMemo(() => {
-    return results.reduce((acc, currentItem) => {
-      return acc + currentItem.price
-    }, 0)
-  }, [results])
+const formatCurrency = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL'
+})
 
+export function List({ results, totalPrice, onAddToWishList }: ListProps) {
   return (
     <>
-      <span>{totalPrice}</span>
+      <strong className={styles.listSum}>
+        Soma total dos itens: {formatCurrency.format(totalPrice)}
+      </strong>
       <ul className={styles.list}>
         {results.map(result => (
           <ListItem

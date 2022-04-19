@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import styles from './listitem.module.scss'
 
 interface Product {
@@ -10,10 +12,14 @@ interface ListItemProps {
   item: Product
 }
 
-export function ListItem({ item }: ListItemProps) {
+function ListItemComponent({ item }: ListItemProps) {
   return (
     <li className={styles.listItem}>
       {item.title} - <strong>R$ {item.price}</strong>
     </li>
   )
 }
+
+export const ListItem = memo(ListItemComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps.item, nextProps.item)
+})

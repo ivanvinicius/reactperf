@@ -1,8 +1,8 @@
 # reactperf
 
-Understanding most of React hooks to get better app perfomance.
+Entendo mais sobre os hooks do React pare ter uma melhor performance no app.
 
-## Anotações
+## Renderização no React
 
 Quando e como as renderizações do React acontecem:
 
@@ -20,3 +20,18 @@ informações, para que seja alterado somente o que é necessário na página. O
 e recria todas as informações, apenas altera.
 3. Se houveram alterações, acontece a renderização da nova versão. 
 
+## memo
+
+1. Muito utilizado quando o conteúdo do componente pai muda, mas o do filho permanece o mesmo.
+2. Evita que uma nova versão (virtual DOM) do componente seja criada de forma desnecessária, isso acontece
+graças ao algoritmo de `shallow compare`, que compara tipos primitivos para ver se houve uma
+mudança nas propriedades do componente.
+3. O segundo parâmentro do memo é utilizado quando as propriedades do componente não são do tipo 
+primitivo, ou seja, no caso de arrays e objetos a comparação não funciona da forma correta.
+4. Em quais momentos utilizar?
+  4.1. Quando temos um Pure Functional Component. São componentes que não envolvem nenhuma lógica,
+  apenas recebem (ou não) propriedades e retornam as mesmas, sem nenhuma alteração.
+  4.2. Componentes que renderizam demais (Renders too often).
+  4.3. Renderizações com as mesmas propriedades.
+  4.4. Componentes que tem um tamanho grande ou médio, componentes pequenos não necessitam da 
+  utilização do memo.

@@ -17,7 +17,6 @@
   <li><a href="#usememo">useMemo</a></li>
   <li><a href="#usecallback">useCallback</a></li>
   <li><a href="#code-splitting-ou-dynamic-import">Code Splitting ou Dynamic Import</a></li>
-  <li><a href="#virtualização">Virtualização</a></li>
   <li><a href="#bundle-analyzer">Bundle analyzer</a></li>
 </ol>
 
